@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
+    <!-- The updater must not use the system runtime that it may be replacing. -->
+    <SelfContained>true</SelfContained>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <PublishTrimmed>false</PublishTrimmed>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>wingetx</AssemblyName>
+    <RootNamespace>WingetX</RootNamespace>
+    <Version>1.1.2</Version>
+    <AssemblyVersion>1.1.2.0</AssemblyVersion>
+    <FileVersion>1.1.2.0</FileVersion>
+    <Description>A WinGet-compatible wrapper with an explicit tracked-package allowlist.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="tests\**\*.cs" />
+    <EmbeddedResource Remove="tests\**\*" />
+    <None Remove="tests\**\*" />
+  </ItemGroup>
+  <Target Name="RequireStandalonePublisher" BeforeTargets="PrepareForPublish">
+    <Error Condition="'$(SelfContained)' != 'true' Or '$(PublishSingleFile)' != 'true' Or '$(IncludeNativeLibrariesForSelfExtract)' != 'true'"
+           Text="wingetx must be published self-contained with its native runtime bundled, so .NET updates cannot close the updater. Use Publish-Standalone.ps1." />
+  </Target>
+</Project>

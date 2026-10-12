@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+publish/
+publish-standalone/
+dist/
+tests/artifacts/
+test-runs/
+standalone-check/
+*-test-*/
+test-run-*/
+*.user
+*.bak
+*.log
+packages.json
+packages.json.bak
